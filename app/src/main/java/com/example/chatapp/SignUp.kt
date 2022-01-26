@@ -34,7 +34,8 @@ class SignUp : AppCompatActivity() {
             val password = edtPassword.text.toString().trim()
 
             if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Enter your", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Enter your name, email, and password",
+                    Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             addUser(email, password)
@@ -46,10 +47,12 @@ class SignUp : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    // SignUp success, update UI with the signed-in user's information
                     val intent = Intent(this@SignUp, MainActivity::class.java)
                     finish()
                     startActivity(intent)
                 } else {
+                    // If signUp fails, display a message to the user
                     Toast.makeText(this, "Something went wrong, try again later",
                         Toast.LENGTH_SHORT).show()
                 }
