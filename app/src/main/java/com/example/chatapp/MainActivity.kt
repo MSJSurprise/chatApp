@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var userRecyclerView: RecyclerView
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                     val currentUser = postSnapshot.getValue(UserList::class.java)
                     if (auth.currentUser?.uid != currentUser?.uid) {
                         userList.add(currentUser!!)
-                        Log.i(TAG, "user added")
                     }
                 }
                 userAdapter.notifyDataSetChanged()
