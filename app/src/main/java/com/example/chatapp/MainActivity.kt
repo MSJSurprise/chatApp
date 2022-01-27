@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private fun getUsersFromDatabase() {
         dbRef.child("user").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
                 for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(UserList::class.java)
                     if (auth.currentUser?.uid != currentUser?.uid) {

@@ -52,19 +52,7 @@ class ChatActivity : AppCompatActivity() {
             addMessage(messageObject)
         }
 
-        dbRef.child("chats").child(senderRoom!!).child("messages")
-            .addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (postSnapshot in snapshot.children) {
-                        val currentUser = postSnapshot.getValue(Message::class.java)
-                        message.add(currentUser!!)
-
-                    }
-                    messageAdapter.notifyDataSetChanged()
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+        getMessage()
 
     }
 
@@ -76,5 +64,22 @@ class ChatActivity : AppCompatActivity() {
 
             }
         edtChat.setText("")
+    }
+
+    private fun getMessage() {
+        dbRef.child("chats").child(senderRoom!!).child("messages")
+            .addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    message.clear()
+                    for (postSnapshot in snapshot.children) {
+                        val currentUser = postSnapshot.getValue(Message::class.java)
+                        message.add(currentUser!!)
+
+                    }
+                    messageAdapter.notifyDataSetChanged()
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 }
